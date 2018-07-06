@@ -1,4 +1,4 @@
-#include Acceleration.h
+#include "Acceleration.h"
 
 #ifndef CI_h
 #define CI_h
@@ -7,9 +7,9 @@ class Accelerometer
 {
   public:
     Accelerometer();
-    Accel Accel_State();
+    Acceleration* Accel_State();
 };
 
-extern Accelermoeter AccMeter;
+extern Accelerometer AccMeter;
 
 #endif
