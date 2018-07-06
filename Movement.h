@@ -4,8 +4,8 @@
 class Movement
 {
   public:
-    Movement();
-    
+    Movement(int x_pin, int y_pin, int motor_pin);
+    void Move(int x_angle, int y_angle);
     //lol add more
 };
 
