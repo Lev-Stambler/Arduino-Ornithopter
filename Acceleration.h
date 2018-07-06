@@ -5,12 +5,12 @@ class Acceleration
 {
   public:
     Acceleration();
-    int16_t X_Acc;
-    int16_t Y_Acc;
-    int16_t Z_Acc;
-    int16_t X_Gy;
-    int16_t Y_Gy;
-    int16_t Z_Gy;
+    static int16_t X_Acc;
+    static int16_t Y_Acc;
+    static int16_t Z_Acc;
+    static int16_t X_Gy;
+    static int16_t Y_Gy;
+    static int16_t Z_Gy;
     //lol add more
 };
 
