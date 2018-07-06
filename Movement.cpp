@@ -8,12 +8,12 @@ Servo servo_y;
 int motor_pin;
 
 
-Movement::Movement(int X_pin, int Y_pin, int Motor_pin)
+Movement::Movement(int X_pin, int Y_pin, int Motor_Pin)
 {
   servo_x.attach(X_pin); 
   servo_y.attach(Y_pin);
   pinMode(motor_pin, OUTPUT);
-  motor_pin = Motor_pin;
+  motor_pin = Motor_Pin;
 }
 
 void Movement::Move_XY(int x_angle, int y_angle)

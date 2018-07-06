@@ -5,16 +5,17 @@ class Calculate
 {
   public:
     Calculate();
-    void Get_Power();
-    int X_Power;
-    int Y_Power;
+    void Power_Fixer(int X_Acc, int Y_Acc, int Z_Acc);
+    int X_Angle;
+    int Y_Angle;
     int Z_Power;
     //lol add more
   private:
-    void XY_Correction(int16_t X_Acc, int16_t Y_Acc);
-    void Z_Correction(int16_t Z_Acc);
+    void XY_Correction(int X_Acc, int Y_Acc);
+    void Z_Correction(int Z_Acc);
+    int Get_Servo_Angle(int Acc);
 };
 
-extern Calculate Calculate;
+extern Calculate Calc;
 
 #endif

@@ -4,12 +4,12 @@
 class Movement
 {
   public:
-    Movement(int X_pin, int Y_pin, int Motor_pin);
+    Movement(int X_pin, int Y_pin, int Motor_Pin);
     void Move_XY(int x_angle, int y_angle);
     void Move_Z(int power);
     //lol add more
 };
 
-extern Movement Movement;
+extern Movement Movem;
 
 #endif
