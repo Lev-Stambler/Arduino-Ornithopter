@@ -30,13 +30,13 @@ Acceleration* Accelerometer::Accel_State()
 //  acc_state->Y_Gy = Wire.read()<<8|Wire.read();  // 0x43 (GYRO_XOUT_H) & 0x44 (GYRO_XOUT_L)
 //  acc_state->Z_Gy = Wire.read()<<8|Wire.read();  // 0x45 (GYRO_YOUT_H) & 0x46 (GYRO_YOUT_L)
 //  GyZ=Wire.read()<<8|Wire.read();  // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
-  Serial.print("AcX = "); Serial.print(acc_state->X_Acc + "\n");
-  Serial.print(" AcY = "); Serial.print(acc_state->Y_Acc + "\n");
-  Serial.print(" AcZ = "); Serial.print(acc_state->Z_Acc + "\n");
+  Serial.print("AcX = "); Serial.print(&acc_state->X_Acc + "\n");
+  Serial.print(" AcY = "); Serial.print(&acc_state->Y_Acc + "\n");
+  Serial.print(" AcZ = "); Serial.print(&acc_state->Z_Acc + "\n");
 //  Serial.print(" | Tmp = "); Serial.print(Tmp/340.00+36.53);  //equation for temperature in degrees C from datashee
-  Serial.print(" | GyX = "); Serial.print(acc_state->X_Gy);
-  Serial.print(" | GyY = "); Serial.print(acc_state->Y_Gy);
-  Serial.print(" | GyZ = "); Serial.println(acc_state->Z_Gy);
+  Serial.print(" | GyX = "); Serial.print(&acc_state->X_Gy);
+  Serial.print(" | GyY = "); Serial.print(&acc_state->Y_Gy);
+  Serial.print(" | GyZ = "); Serial.println(&acc_state->Z_Gy);
 
 
   return acc_state;
