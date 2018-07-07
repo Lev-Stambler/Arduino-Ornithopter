@@ -6,6 +6,12 @@ const int MPU_addr=0x68;
 
 Accelerometer::Accelerometer()
 {
+ 
+}
+
+void Accelerometer::SETUP()
+{
+  
   Wire.begin();
   Wire.beginTransmission(MPU_addr);
   Wire.write(0x6B);//Power_Register);  // PWR_MGMT_1 register
@@ -13,11 +19,8 @@ Accelerometer::Accelerometer()
   Wire.endTransmission(0);
 }
 
-
-Acceleration* Accelerometer::Accel_State()
-{
-  Acceleration *acc_state = new Acceleration();
-  
+void Accelerometer::Accel_State(Acceleration* acc_state)
+{  
   
   Wire.beginTransmission(MPU_addr);
   Wire.write(0x3B);  // starting with register 0x3B (ACCEL_XOUT_H)
@@ -38,10 +41,9 @@ Acceleration* Accelerometer::Accel_State()
 //  Serial.print(" | GyY = "); Serial.print(acc_state->Y_Gy);
 //  Serial.print(" | GyZ = "); Serial.println(acc_state->Z_Gy);
 
-
-  return acc_state;
   
   //Get rid of serial print
   //Find how to just get AcX AcY etc rather than all at once
 }
 
+Accelerometer AccMeter = Accelerometer();

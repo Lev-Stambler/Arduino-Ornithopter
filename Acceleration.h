@@ -5,6 +5,7 @@ class Acceleration
 {
   public:
     Acceleration();
+    void SETUP();
     int X_Acc;
     int Y_Acc;
     int Z_Acc;

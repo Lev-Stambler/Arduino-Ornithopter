@@ -9,13 +9,15 @@ class Calculate
     int X_Angle;
     int Y_Angle;
     int Z_Power;
+    int Desire_X;
+    int Desire_Y;
     //lol add more
   private:
     void XY_Correction(int X_Acc, int Y_Acc);
     void Z_Correction(int Z_Acc);
-    int Get_Servo_Angle(int Acc);
+    int Get_Servo_Angle(int Acc, int Angle, int Desired);
 };
 
-extern Calculate Calc;
+extern Calculate calculator;
 
 #endif

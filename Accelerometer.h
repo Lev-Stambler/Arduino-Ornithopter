@@ -7,7 +7,8 @@ class Accelerometer
 {
   public:
     Accelerometer();
-    Acceleration* Accel_State();
+    void SETUP();
+    void Accel_State(Acceleration *Accel);
 };
 
 extern Accelerometer AccMeter;

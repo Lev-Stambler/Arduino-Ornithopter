@@ -1,27 +1,36 @@
 #include "Arduino.h"
 #include "Movement.h"
+#include "Servo.h"
 
 #include <Servo.h>
 
-Servo servo_x;
-Servo servo_y;
+Servo servo_X;
+Servo servo_Y;
+
 int motor_pin;
 
 
-Movement::Movement(int X_pin, int Y_pin, int Motor_Pin)
+Movement::Movement()
 {
-  servo_x.attach(X_pin); 
-  servo_y.attach(Y_pin);
-  pinMode(motor_pin, OUTPUT);
-  motor_pin = Motor_Pin;
+  
 }
 
-void Movement::Move_XY(int x_angle, int y_angle)
+void Movement::SETUP(int X_pin, int Y_pin, int Motor_Pin)
 {
-   //int x_correction = map(x,// , ,0, 180);
-   //int y_correction = map(y,// , , 0, 180);
-   servo_x.write(x_angle);
-   servo_y.write(y_angle);
+  servo_X.attach(X_pin); 
+  servo_Y.attach(Y_pin);
+  pinMode(Motor_Pin, OUTPUT);
+
+}
+
+void Movement::Move_X(int x_angle)
+{
+   servo_X.write(x_angle);
+}
+
+void Movement::Move_Y(int y_angle)
+{
+  servo_Y.write(y_angle);
 }
                          
 void Movement::Move_Z(int power)
