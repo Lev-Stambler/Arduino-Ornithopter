@@ -17,7 +17,7 @@ Calculate::Calculate()
 
 void Calculate::Power_Fixer(int X_Acc, int Y_Acc, int Z_Acc)
 {
-  XY_Correction(X_Acc, Y_Acc);
+  XY_Correction(X_Acc, Y_Acc, 10);
   Z_Correction(Z_Acc);
   mvmnt.Move_Z(Calculate::Z_Power);
 }
@@ -42,23 +42,34 @@ void Calculate::Z_Correction(int Z_Acc)
 
 }
 
-void Calculate::XY_Correction(int X_Acc, int Y_Acc)
+void Calculate::XY_Correction(int X_Acc, int Y_Acc, int Corr_Time)
 {
   int former_X = Calculate::X_Angle;
   int former_Y = Calculate::Y_Angle;
-
-  Calculate::X_Angle = Get_Servo_Angle(X_Acc, former_X, Calculate::Desire_X);
+  if(!if_X_Corr)
+  {
+    Calculate::X_Angle = Get_Servo_Angle(X_Acc, former_X, Calculate::Desire_X);
+    X_Corr_Count++;
+    if(X_Corr_Count > 20)
+    {
+      X_Corr_Count = 0;
+      if_X_Corr = false;
+    }
+  }
   Calculate::Y_Angle = Get_Servo_Angle(Y_Acc, former_Y, Calculate::Desire_Y);
 //  Serial.print(X_Acc); Ser/ial.print(", "); Serial.println(Y_Acc);
-  if(former_X != Calculate::X_Angle)
+  if(former_X != X_Angle)
   {
-    Serial.println("WOW X Moved");
-    mvmnt.Move_X(Calculate::X_Angle);
+    Serial.print("WOW X Moved: ");
+    Serial.println(X_Angle);
+    mvmnt.Move_X(X_Angle);
+    if_X_Corr = true;
   }
-  if(former_Y != Calculate::Y_Angle)
+  if(former_Y != Y_Angle)
   {
-    Serial.println("WOW Y Moved");
-    mvmnt.Move_Y(Calculate::Y_Angle);
+    Serial.print("WOW Y Moved: ");
+    Serial.println(Y_Angle);
+    mvmnt.Move_Y(Y_Angle);
   }
 
   mvmnt.Move_Y(Calculate::Y_Angle);
@@ -66,16 +77,22 @@ void Calculate::XY_Correction(int X_Acc, int Y_Acc)
 
 int Calculate::Get_Servo_Angle(int Acc, int Current_Ang, int Desired)
 {
-  Serial.println(Current_Ang);
-  if(Current_Ang > 180 || Current_Ang < 0) return Current_Ang;
-  else if(Acc < Desired - 100)
+  int res = Current_Ang;
+//  Serial.print("ANG: ");
+//  Serial.println(Current_Ang);
+  if(Current_Ang >= 180 || 0 >= Current_Ang) {}
+  else if(Acc < (Desired - 1000))
   {
-    return (Current_Ang + 10);
+    res = Current_Ang + 10;
+    Serial.println(res);
   }
-  else if(Acc > Desired + 100)
+  else if(Acc > (Desired + 1000))
   {
-    return (Current_Ang - 10);
+    res = Current_Ang - 10; 
+    Serial.println(res);
+    
   }
+  return res;
 }
 
 Calculate calculator = Calculate();
