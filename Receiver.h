@@ -1,7 +1,7 @@
-#ifindef receiver_h
-#define receiver_h
+#ifndef Receiver_h
+#define Receiver_h
 
-class receiver
+class Receiver
 {
   public:
   receiver();
@@ -12,5 +12,5 @@ class receiver
   //
 };
 
-extern receiver recevr;
+extern Receiver recevr;
 #endif

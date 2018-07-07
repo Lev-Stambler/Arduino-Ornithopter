@@ -1,5 +1,5 @@
 #include "Arduino.h"
-#include "receiver.h"
+#include "Receiver.h"
 #include <SPI.h>
 #include <nRF24L01.h>
 #include <RF24.h>
@@ -13,18 +13,20 @@ receiver::receiver(){
   
 }
 
-void receiver::SETUP(){
+void receiver::SETUP()
+{
  radio.begin();
  radio.openReadingPipe (1,pipe);
  radio.startListening();
 }
 
-int receiver:: getter(){
-radio.read(data_received, sizeof(data_received));
-X_received = data_received[0];
-Y_received = data_received[1];
-Z_received = data_received[2];
-return (data_received);
+int receiver:: getter()
+{
+  radio.read(data_received, sizeof(data_received));
+  X_received = data_received[0];
+  Y_received = data_received[1];
+  Z_received = data_received[2];
+  return (data_received);
 }
 
 receiver recevr = receiver();
