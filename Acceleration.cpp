@@ -2,12 +2,12 @@
 
 Acceleration::Acceleration()
 {
-  Acceleration::X_Acc = 0;
-  Acceleration::Y_Acc = 0;
-  Acceleration::Z_Acc = 0;
-  Acceleration::X_Gy = 0;
-  Acceleration::Y_Gy = 0;
-  Acceleration::Z_Gy = 0;
+  X_Acc = 0;
+  Y_Acc = 0;
+  Z_Acc = 0;
+  X_Gy = 0;
+  Y_Gy = 0;
+  Z_Gy = 0;
 }
 
 void Acceleration::SETUP()

@@ -14,7 +14,7 @@ Calculate::Calculate()
 }
 
 
-//public func start
+//public functions start
 
 void Calculate::Power_Fixer(int X_Acc, int Y_Acc, int Z_Acc)
 {
@@ -22,7 +22,9 @@ void Calculate::Power_Fixer(int X_Acc, int Y_Acc, int Z_Acc)
   Z_Correction(Z_Acc);
 }
 
-//private func start
+
+
+//private functions start
 
 void Calculate::Z_Correction(int Z_Acc)
 {
