@@ -7,7 +7,7 @@
 
 class Receiver
 {
-  public:
+  public://we could possibly make this private
   Receiver();
   void SETUP();
   struct dataReceived getMovementCommands();
