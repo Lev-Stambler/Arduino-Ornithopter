@@ -2,10 +2,6 @@
 #include "Acceleration.h"
 #include "Calculate.h"
 
-
-
-
-
 void setup() 
 {
   
@@ -18,6 +14,7 @@ void setup()
   Serial.print("Desired:"); Serial.print(Accel.X_Acc); Serial.print(", "); Serial.println(Accel.Y_Acc); 
   calculator.Desire_X = Accel.X_Acc;
   calculator.Desire_Y = Accel.Y_Acc;
+  calculator.Desire_Z = Accel.Z_Acc;
 }
 
 void loop() 
