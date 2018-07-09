@@ -1,16 +1,18 @@
 #include "Calculate.h"
 #include "Arduino.h"
 #include "Movement.h"
-
+#include "CalculatePID.h"
 
 Calculate::Calculate()
 {
   X_Angle = 90;
   Y_Angle = 90;
   Z_Power = 120;
+  pi = 3.14159265358979323846;
   Wait_Cycle = 10;
   //motor 8, x 9, y 11
   mvmnt.SETUP(8, 9, 11);
+  CalcPID.SETUP(&Z_Acceleration, &Desire_Z, &Downwards_Force);
 }
 
 
@@ -19,12 +21,25 @@ Calculate::Calculate()
 void Calculate::Power_Fixer(int X_Acc, int Y_Acc, int Z_Acc)
 {
   XY_Correction(X_Acc, Y_Acc, 10);
-  Z_Correction(Z_Acc);
+  Z_Correction_PID(Z_Acc);
 }
 
 
 
 //private functions start
+
+void Calculate::Z_Correction_PID(int Z_Acc)
+{
+  float x_angle_radians = (abs(90 - X_Angle) * pi)/180;
+  float y_angle_radians = (abs(90 - Y_Angle) * pi)/180;
+  Z_Acceleration = Z_Acc;
+//  Downwards_Force = Z_Power * (cos(y_angle_radians)) * cos(x_angle_radians);
+  
+  CalcPID.Z_Fix();
+  Z_Power = Downwards_Force / (cos(y_angle_radians) * cos(x_angle_radians));
+  mvmnt.Move_Z(int(Z_Power));
+  Serial.print("Z POWER PID: "); Serial.print(Z_Power); Serial.print(" Downwards: "); Serial.println(Downwards_Force);
+}
 
 void Calculate::Z_Correction(int Z_Acc)
 {
