@@ -1,3 +1,0 @@
-For now copyrighted.
-
-Open source uses: Arduino Libraries, PID_v1, nRF24L01
