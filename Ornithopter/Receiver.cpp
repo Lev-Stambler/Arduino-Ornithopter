@@ -19,6 +19,7 @@ void Receiver::SETUP()
  radio.begin();
  radio.openReadingPipe (1,pipe);
  radio.startListening();
+//receive data transmitted to manually controll the ornithopter  
 }
 
 
@@ -36,7 +37,7 @@ int* Receiver:: getMovementCommands()
 //  Y_received = data_received[1];
 //  Z_received = data_received[2];
 //  remote.SETUP(data_received coordinates);
-return(mem);
+return(mem);//import the location in memory the data to controll the ornithopter data is stored
 }
 
 Receiver recevr = Receiver();
