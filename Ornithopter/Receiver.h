@@ -12,7 +12,6 @@ class Receiver
   void SETUP();
   //struct data_received
   int* getMovementCommands();
-  //put setter or whatever we do with the data received here
   
   //
 };
