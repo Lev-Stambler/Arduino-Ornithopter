@@ -7,10 +7,11 @@
 
 class Receiver
 {
-  public://we could possibly make this private
+  public:
   Receiver();
   void SETUP();
-  struct dataReceived getMovementCommands();
+  //struct data_received
+  int* getMovementCommands();
   //put setter or whatever we do with the data received here
   
   //
