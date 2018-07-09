@@ -2,12 +2,16 @@
 #include "Accelerometer.h"
 #include "Acceleration.h"
 #include "Calculate.h"
+#include "Receiver.h"
+#include "Movement.h"
 
 void setup() 
 {
   Serial.begin(9600);
   Serial.println("STARTED");
 //  Accel = Acceleration();
+   recevr.SETUP();
+  recevr.getMovementCommands();
   AccMeter.SETUP();
   // put your setup code here, to run once:
   AccMeter.Accel_State(&Accel);
@@ -23,6 +27,10 @@ void loop()
   AccMeter.Accel_State(&Accel);
   calculator.Power_Fixer(Accel.X_Acc, Accel.Y_Acc, Accel.Z_Acc);
 //  Serial.print("Power: "); S/erial.println(calculator.Z_Power);
+  int * temp = recevr.getMovementCommands();
+  mvmnt.Move_X(*temp);
+  mvmnt.Move_Y(*(temp+1));
+  mvmnt.Move_Z(*(temp+2));
   delay(100);
 }
 
