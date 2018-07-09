@@ -9,9 +9,9 @@
 
 Calculate::Calculate()
 {
-  PID_Vals.Kp = 2;
-  PID_Vals.Ki = 5;
-  PID_Vals.Kd = 1;
+  Kp = 2;
+  Ki = 5;
+  Kd = 1;
   
   X_Angle = 90;
   Y_Angle = 90;
@@ -20,7 +20,7 @@ Calculate::Calculate()
   Wait_Cycle = 10;
   //motor 8, x 9, y 11
   mvmnt.SETUP(8, 9, 11);
-  CalcPID.SETUP(&Z_Acceleration, &Desire_Z, &Downwards_Force, PID_Vals.Kp, PID_Vals.Ki, PID_Vals.Kd);
+  CalcPID.SETUP(&Z_Acceleration, &Desire_Z, &Downwards_Force, Kp, Ki, Kd);
 }
 
 
