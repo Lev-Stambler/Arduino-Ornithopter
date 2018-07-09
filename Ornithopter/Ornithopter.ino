@@ -5,6 +5,8 @@
 #include "Receiver.h"
 #include "Movement.h"
 
+bool is_hover;
+
 void setup() 
 {
   Serial.begin(9600);
@@ -23,15 +25,28 @@ void setup()
 
 void loop() 
 {
-  // put your main code here, to run repeatedly:
-  AccMeter.Accel_State(&Accel);
-  calculator.Power_Fixer(Accel.X_Acc, Accel.Y_Acc, Accel.Z_Acc);
-//  Serial.print("Power: "); S/erial.println(calculator.Z_Power);
   int * temp = recevr.getMovementCommands();
-  mvmnt.Move_X(*temp);
-  mvmnt.Move_Y(*(temp+1));
-  mvmnt.Move_Z(*(temp+2));
-  delay(100);
+  if(*(temp + 4) == 1)
+  {
+    is_hover = True;
+  }
+  else if(*(temp + 4) == 0)
+  {
+    is_hover = False;
+  }
+  if(is_hover)
+  {
+    AccMeter.Accel_State(&Accel);
+    calculator.Power_Fixer(Accel.X_Acc, Accel.Y_Acc, Accel.Z_Acc);
+  }
+//  Serial.print("Power: "); S/erial.println(calculator.Z_Power);
+  else
+  {
+    mvmnt.Move_X(*temp);
+    mvmnt.Move_Y(*(temp+1));
+    mvmnt.Move_Z(*(temp+2));
+    delay(100);
+  }
 }
 
 
