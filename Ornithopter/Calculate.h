@@ -30,6 +30,14 @@ class Calculate
     int Z_Corr_Count;
     float pi;
     int Kp, Kd, Ki;
+    int X_Corr_Factor,
+    Y_Corr_Factor,
+    X_Recursive_Scalar,
+    Y_Recursive_Scalar;
+    /*
+     * Corr_Scalar scales the amount of change for every addition of change to servo angle
+     * Y_Recursive_Factor is used to increase or decrease the amount of weight with every addition
+     */
 };
 
 extern Calculate calculator;

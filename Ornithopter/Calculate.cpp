@@ -143,17 +143,16 @@ void Calculate::XY_Correction(int X_Acc, int Y_Acc, int Corr_Time)
 int Calculate::Get_Servo_Angle(int Acc, int Current_Ang, int Desired, int Fluctuator)
 {
   int res = Current_Ang;
-//  Serial.print("ANG: ");
-//  Serial.println(Current_Ang);
+;
   if(Current_Ang >= 180 || 0 >= Current_Ang) {}
   else if(Acc < (Desired - Fluctuator))
   {
-    res = Current_Ang + 10;
+    res = Current_Ang + X_Corr_Factor;
     Serial.println(res);
   }
   else if(Acc > (Desired + Fluctuator))
   {
-    res = Current_Ang - 10; 
+    res = Current_Ang - X_Corr_Factor; 
     Serial.println(res);
     
   }
