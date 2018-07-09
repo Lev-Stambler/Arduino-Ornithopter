@@ -1,8 +1,8 @@
 #ifndef Receiver_h
 #define Receiver_h
 #include <SPI.h>
-#include <nRF24L01.h>
-#include <RF24.h>
+#include "nRF24L01.h"
+#include "RF24.h"
 
 
 class Receiver

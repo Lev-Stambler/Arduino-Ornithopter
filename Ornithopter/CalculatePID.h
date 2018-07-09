@@ -7,7 +7,7 @@ class CalculatePID
 {
   public:
     CalculatePID();
-    void SETUP(double* Z_Acc,double* Z_Desired, double* Z_Power);
+    void SETUP(double* Z_Acc,double* Z_Desired, double* Z_Power, int Kp, int Ki, int Kd);
     void Z_Fix();
 
   private:

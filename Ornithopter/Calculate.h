@@ -29,6 +29,10 @@ class Calculate
     int Y_Corr_Count;
     int Z_Corr_Count;
     float pi;
+    struct PID_Vals
+    {
+      int Kp, Kd, Ki;
+    }
 };
 
 extern Calculate calculator;
