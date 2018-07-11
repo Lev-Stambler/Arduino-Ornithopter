@@ -12,49 +12,39 @@ int lastButtonState = LOW; // the previous reading from the input pin
 int buttonPin = 2;
 
 
-void setup() 
-{
-  radio.begin();
-  radio.openWritingPipe(pipe);
-  pinMode(buttonPin, INPUT_PULLUP);
-  Serial.begin(9600);
+void setup() {
+radio.begin();
+radio.openWritingPipe(pipe);
+pinMode(buttonPin, INPUT_PULLUP);
+Serial.begin(9600);
 }
 
 void loop() {
-  while (Serial.available()) 
-  {
+  while (Serial.available()) {
     int temp = 0;
     int X_Pin = analogRead(A1),
         Y_Pin = analogRead(A0),
         Z_Pin = analogRead(A2),
         button = digitalRead(buttonPin);
-      if (button!= lastButtonState) 
-        lastDebounceTime = millis();
-    
-      if ((millis() - lastDebounceTime) > debounceDelay) 
-      {
-        if (button != buttonState) 
-        {
-            buttonState = button;
-            if (buttonState == HIGH) 
-            {
-              Is_Hovering = Is_Hovering*-1;
-            }
-        }
-      }
-    
-      lastButtonState = button;
-      Serial.println(Is_Hovering);
-      while (Serial.available() > 0 && temp < 4)
-      {  
-        acc_data[0] = X_Pin;
-        acc_data[1] = Y_Pin;
-        acc_data[2] = Z_Pin;
-        acc_data[3] = Is_Hovering;
-        temp++;
+      if (button!= lastButtonState) lastDebounceTime = millis();
+      if ((millis() - lastDebounceTime) > debounceDelay) {
+        if (button != buttonState) {
+             buttonState = button;
+          if (buttonState == HIGH) {
+            Is_Hovering = Is_Hovering*-1;
       }
     }
-  
-  radio.write(acc_data,sizeof(acc_data));
-  
+  }
+  lastButtonState = button;
+  Serial.println(Is_Hovering);
+   while (Serial.available() > 0 && temp < 4)
+   {  
+      acc_data[0] = map(X_Pin, 0, 1023, 0, 180);
+      acc_data[1] = map(Y_Pin, 0, 1023, 0, 180); 
+      acc_data[2] = map(Z_Pin, 0, 1023, 0, 255);
+      acc_data[3] = Is_Hovering;
+      temp++;
+  }
+}
+radio.write(acc_data,sizeof(acc_data));
 }
