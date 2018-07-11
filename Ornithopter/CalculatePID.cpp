@@ -1,7 +1,9 @@
 #include "Arduino.h"
 #include "CalculatePID.h"
 
-
+/*
+* This class is used to interface with the PID. 
+*/
 
 CalculatePID::CalculatePID()
 {
