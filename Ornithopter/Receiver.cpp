@@ -9,10 +9,17 @@
 const uint64_t pipe = 0xE8E1F0F0E1LL;
 RF24 radio (9,10);
 
+/*
+* This class Interfaces with the RF Reciever module
+*/
 
 Receiver::Receiver(){
   
 }
+
+/*
+* This function sets up the RF
+*/
 
 void Receiver::SETUP()
 {
@@ -22,6 +29,10 @@ void Receiver::SETUP()
 //receive data transmitted to manually controll the ornithopter  
 }
 
+/*
+* This function gets the commands from the RF module and returns the int pointer where 
+* the array storring the commands can be found
+*/
 
 int* Receiver:: getMovementCommands()
 {
@@ -37,7 +48,7 @@ int* Receiver:: getMovementCommands()
 //  Y_received = data_received[1];
 //  Z_received = data_received[2];
 //  remote.SETUP(data_received coordinates);
-return(mem);//import the location in memory the data to controll the ornithopter data is stored
+  return(mem); //import the location in memory the data to controll the ornithopter data is stored
 }
 
 Receiver recevr = Receiver();
