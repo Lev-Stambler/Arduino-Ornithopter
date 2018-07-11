@@ -21,7 +21,7 @@ class Calculate
     void Z_Correction_PID(int Z_Acc);
     void Z_Correction(int Z_Acc);
     int Get_Z_Correction(int Acc, int Power,int Desired, int Fluctuator);
-    int Get_Servo_Angle(int Acc, int Angle, int Desired, int Fluctuator);
+    int Get_Servo_Angle(int Acc, int Angle, int Desired, int Fluctuator, int Corr_Factor);
     bool if_X_Corr;
     bool if_Y_Corr;
     bool if_Z_Corr;

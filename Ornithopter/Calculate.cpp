@@ -11,16 +11,29 @@ Calculate::Calculate()
 {
   Kp = 2;
   Ki = 5;
-  Kd = 0.5;
-  
+  Kd = 5.5;
+
+  X_Corr_Factor = 10;
+  Y_Corr_Factor = 10;
+  X_Corr_Count = 100;
+  Y_Corr_Count = 100;
   X_Angle = 90;
   Y_Angle = 90;
-  Z_Power = 120;
+  Z_Power = 220;
   pi = 3.14159265358979323846;
   Wait_Cycle = 10;
-  //motor 8, x 9, y 11 z
-  mvmnt.SETUP(8, 9, 11);
+  //motor 6, x 9, y 11 z
+  mvmnt.SETUP(6, 9, 11);
   CalcPID.SETUP(&Z_Acceleration, &Desire_Z, &Downwards_Force, Kp, Ki, Kd);
+  mvmnt.Move_X(X_Angle);
+
+  delayMicroseconds(100000);
+  
+  mvmnt.Move_Y(Y_Angle);
+
+  delayMicroseconds(100000);
+  
+  mvmnt.Move_Z(int(Z_Power));
 }
 
 
@@ -45,12 +58,12 @@ void Calculate::Z_Correction_PID(int Z_Acc)
   float x_angle_radians = (abs(90 - X_Angle) * pi)/180;
   float y_angle_radians = (abs(90 - Y_Angle) * pi)/180;
   Z_Acceleration = Z_Acc;
-//  Downwards_Force = Z_Power * (cos(y_angle_radians)) * cos(x_angle_radians);
+  Downwards_Force = Z_Power * (cos(y_angle_radians)) * cos(x_angle_radians);
   
   CalcPID.Z_Fix();
   Z_Power = Downwards_Force / (cos(y_angle_radians) * cos(x_angle_radians));
   mvmnt.Move_Z(int(Z_Power));
-  Serial.print("Z POWER PID: "); Serial.print(Z_Power); Serial.print(" Downwards: "); Serial.println(Downwards_Force);
+//  Serial.print("Z POWER PID: "); Serial.print(Z_Power); Serial.print(" Downwards: "); Serial.println(Downwards_Force);
 }
 /*
   NONE PID CORRECTION FACTOR
@@ -107,8 +120,9 @@ void Calculate::XY_Correction(int X_Acc, int Y_Acc, int Corr_Time)
 {
   int former_X = X_Angle;
   int former_Y = Y_Angle;
+  
   if(!if_X_Corr)
-    X_Angle = Get_Servo_Angle(X_Acc, former_X, Desire_X, 2000, X_Corr_Factor);
+    X_Angle = Get_Servo_Angle(X_Acc, former_X, Desire_X, 500, X_Corr_Factor);
   
   else
   {
@@ -117,11 +131,12 @@ void Calculate::XY_Correction(int X_Acc, int Y_Acc, int Corr_Time)
       X_Corr_Count = 0;
       if_X_Corr = false;
     }
-    X_Corr_Count++;
+    else
+      X_Corr_Count++;
   }
 
   if(!if_Y_Corr)
-    Y_Angle = Get_Servo_Angle(Y_Acc, former_Y, Desire_Y, 1200, Y_Corr_Factor);
+    Y_Angle = Get_Servo_Angle(Y_Acc, former_Y, Desire_Y, 200, Y_Corr_Factor);
   else
   {
     if(Y_Corr_Count > Wait_Cycle)
@@ -129,7 +144,8 @@ void Calculate::XY_Correction(int X_Acc, int Y_Acc, int Corr_Time)
       Y_Corr_Count = 0;
       if_Y_Corr = false;
     }
-    Y_Corr_Count++;
+    else
+      Y_Corr_Count++;
   }
   
 //    Serial.print(X_Acc); Serial.print(", "); Serial.println(Y_Acc);
@@ -140,6 +156,7 @@ void Calculate::XY_Correction(int X_Acc, int Y_Acc, int Corr_Time)
     mvmnt.Move_X(X_Angle);
     if_X_Corr = true;
   }
+    
   if(former_Y != Y_Angle)
   {
     Serial.print("WOW Y Moved: ");
@@ -147,8 +164,6 @@ void Calculate::XY_Correction(int X_Acc, int Y_Acc, int Corr_Time)
     mvmnt.Move_Y(Y_Angle);
     if_Y_Corr = true;
   }
-
-  mvmnt.Move_Y(Calculate::Y_Angle);
 }
 
 /*
@@ -159,17 +174,21 @@ int Calculate::Get_Servo_Angle(int Acc, int Current_Ang, int Desired, int Fluctu
 {
   int res = Current_Ang;
 
-  if(Current_Ang >= 180 || 0 >= Current_Ang) {}
-  else if(Acc < (Desired - Fluctuator))
+  if(Acc < (Desired - Fluctuator))
   {
-    res = Current_Ang + Corr_Factor;
+    if(res >= 180)
+      res = 180;
+    else
+      res = Current_Ang + Corr_Factor;
     Serial.println(res);
   }
   else if(Acc > (Desired + Fluctuator))
   {
-    res = Current_Ang - Corr_Factor; 
+    if(res <= 0)
+      res = 0;
+    else
+      res = Current_Ang - Corr_Factor; 
     Serial.println(res);
-    
   }
   return res;
 }

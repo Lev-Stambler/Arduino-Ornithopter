@@ -5,7 +5,7 @@
 #include "Receiver.h"
 #include "Movement.h"
 
-bool is_hover;
+bool is_hover= true;
 /*
 * is hover is used to determine whether the arduino is in hover or control mode
 */
@@ -29,16 +29,17 @@ void loop()
   int * temp = recevr.getMovementCommands();
   if(*(temp + 4) == 1)
   {
-    is_hover = True;
+    is_hover = true;
   }
   else if(*(temp + 4) == 0)
   {
-    is_hover = False;
+    is_hover = false;
   }
   if(is_hover)
   {
     AccMeter.Accel_State(&Accel);
     calculator.Power_Fixer(Accel.X_Acc, Accel.Y_Acc, Accel.Z_Acc);
+    delay(10);
   }
   else
   {
