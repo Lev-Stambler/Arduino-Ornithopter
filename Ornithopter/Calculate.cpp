@@ -11,14 +11,14 @@ Calculate::Calculate()
 {
   Kp = 2;
   Ki = 5;
-  Kd = 1;
+  Kd = 0.5;
   
   X_Angle = 90;
   Y_Angle = 90;
   Z_Power = 120;
   pi = 3.14159265358979323846;
   Wait_Cycle = 10;
-  //motor 8, x 9, y 11
+  //motor 8, x 9, y 11 z
   mvmnt.SETUP(8, 9, 11);
   CalcPID.SETUP(&Z_Acceleration, &Desire_Z, &Downwards_Force, Kp, Ki, Kd);
 }
@@ -36,6 +36,10 @@ void Calculate::Power_Fixer(int X_Acc, int Y_Acc, int Z_Acc)
 
 //private functions start
 
+/*
+ * The following function uses a PID Controller to calculate the necessary power needed for the PWM of the z-axis motor.
+ */
+
 void Calculate::Z_Correction_PID(int Z_Acc)
 {
   float x_angle_radians = (abs(90 - X_Angle) * pi)/180;
@@ -48,7 +52,8 @@ void Calculate::Z_Correction_PID(int Z_Acc)
   mvmnt.Move_Z(int(Z_Power));
   Serial.print("Z POWER PID: "); Serial.print(Z_Power); Serial.print(" Downwards: "); Serial.println(Downwards_Force);
 }
-
+/*
+  NONE PID CORRECTION FACTOR
 void Calculate::Z_Correction(int Z_Acc)
 {
   int former_Z = Z_Power;
@@ -71,7 +76,7 @@ void Calculate::Z_Correction(int Z_Acc)
     Serial.print("WOW Z Moved. New Power: "); Serial.println(Z_Power); Serial.println(former_Z); Serial.println(Z_Power);
     if_Z_Corr = true;
   }
-
+  
 }
 
 int Calculate::Get_Z_Correction(int Acc, int Power, int Desired, int Fluctuator)
@@ -91,13 +96,19 @@ int Calculate::Get_Z_Correction(int Acc, int Power, int Desired, int Fluctuator)
   }
   return res;
 }
+*/
+
+/*
+ * This function corrects the two servos in order to make flight stable in the X and Y axis
+ * The function of Corr_Count is to create a delay after each adjustment to the servo
+ */
 
 void Calculate::XY_Correction(int X_Acc, int Y_Acc, int Corr_Time)
 {
   int former_X = X_Angle;
   int former_Y = Y_Angle;
   if(!if_X_Corr)
-    X_Angle = Get_Servo_Angle(X_Acc, former_X, Desire_X, 2000);
+    X_Angle = Get_Servo_Angle(X_Acc, former_X, Desire_X, 2000, X_Corr_Factor);
   
   else
   {
@@ -110,7 +121,7 @@ void Calculate::XY_Correction(int X_Acc, int Y_Acc, int Corr_Time)
   }
 
   if(!if_Y_Corr)
-    Y_Angle = Get_Servo_Angle(Y_Acc, former_Y, Desire_Y, 1200);
+    Y_Angle = Get_Servo_Angle(Y_Acc, former_Y, Desire_Y, 1200, Y_Corr_Factor);
   else
   {
     if(Y_Corr_Count > Wait_Cycle)
@@ -140,19 +151,23 @@ void Calculate::XY_Correction(int X_Acc, int Y_Acc, int Corr_Time)
   mvmnt.Move_Y(Calculate::Y_Angle);
 }
 
-int Calculate::Get_Servo_Angle(int Acc, int Current_Ang, int Desired, int Fluctuator)
+/*
+ * This function compares desired acceleration values to current acceleration values and adjusts angle of the servo accordingly
+ */
+
+int Calculate::Get_Servo_Angle(int Acc, int Current_Ang, int Desired, int Fluctuator, int Corr_Factor)
 {
   int res = Current_Ang;
-;
+
   if(Current_Ang >= 180 || 0 >= Current_Ang) {}
   else if(Acc < (Desired - Fluctuator))
   {
-    res = Current_Ang + X_Corr_Factor;
+    res = Current_Ang + Corr_Factor;
     Serial.println(res);
   }
   else if(Acc > (Desired + Fluctuator))
   {
-    res = Current_Ang - X_Corr_Factor; 
+    res = Current_Ang - Corr_Factor; 
     Serial.println(res);
     
   }
