@@ -19,6 +19,10 @@ void Accelerometer::SETUP()
   Wire.endTransmission(0);
 }
 
+/*
+* This header file essentially interfaces with the accelerometer and stores the information in the acceleration class
+*/
+
 void Accelerometer::Accel_State(Acceleration* acc_state)
 {  
   
