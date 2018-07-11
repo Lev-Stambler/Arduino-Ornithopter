@@ -7,7 +7,7 @@
 Servo servo_X;
 Servo servo_Y;
 
-int motor_pin;
+
 
 /* 
 * This class is used to move the servos and motor
@@ -32,8 +32,8 @@ void Movement::SETUP(int X_pin, int Y_pin, int Motor_Pin)
 
 void Movement::Move_X(int x_angle)
 {
-   servo_X.write(x_angle);
-//   delayMicroseconds(100000);
+  servo_X.write(x_angle);
+  last_move = millis();
   
 }
 
@@ -44,9 +44,11 @@ void Movement::Move_X(int x_angle)
 void Movement::Move_Y(int y_angle)
 {
   servo_Y.write(y_angle);
-//  delayMicroseconds(100000);
+//  delayMicroseconds(15000);
 }
 
+
+//void Movement::set_last(int* last_move, 
 /*
 *controll movement in the z direction vai pulse with modulation (increase or decrease power being sent to wings)
 */

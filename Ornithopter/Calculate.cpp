@@ -13,8 +13,8 @@ Calculate::Calculate()
   Ki = 5;
   Kd = 5.5;
 
-  X_Corr_Factor = 10;
-  Y_Corr_Factor = 10;
+  X_Corr_Factor = 2;
+  Y_Corr_Factor = 2;
   X_Corr_Count = 100;
   Y_Corr_Count = 100;
   X_Angle = 90;
@@ -136,7 +136,7 @@ void Calculate::XY_Correction(int X_Acc, int Y_Acc, int Corr_Time)
   }
 
   if(!if_Y_Corr)
-    Y_Angle = Get_Servo_Angle(Y_Acc, former_Y, Desire_Y, 200, Y_Corr_Factor);
+    Y_Angle = Get_Servo_Angle(Y_Acc, former_Y, Desire_Y, 500, Y_Corr_Factor);
   else
   {
     if(Y_Corr_Count > Wait_Cycle)
@@ -148,7 +148,6 @@ void Calculate::XY_Correction(int X_Acc, int Y_Acc, int Corr_Time)
       Y_Corr_Count++;
   }
   
-//    Serial.print(X_Acc); Serial.print(", "); Serial.println(Y_Acc);
   if(former_X != X_Angle)
   {
     Serial.print("WOW X Moved: ");
@@ -176,19 +175,17 @@ int Calculate::Get_Servo_Angle(int Acc, int Current_Ang, int Desired, int Fluctu
 
   if(Acc < (Desired - Fluctuator))
   {
-    if(res >= 180)
-      res = 180;
+    if(res >= 150)
+      res = res;
     else
       res = Current_Ang + Corr_Factor;
-    Serial.println(res);
   }
   else if(Acc > (Desired + Fluctuator))
   {
-    if(res <= 0)
-      res = 0;
+    if(res <= 20)
+      res = res;
     else
       res = Current_Ang - Corr_Factor; 
-    Serial.println(res);
   }
   return res;
 }

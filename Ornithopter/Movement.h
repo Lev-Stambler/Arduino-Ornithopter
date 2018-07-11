@@ -10,6 +10,11 @@ class Movement
     void Move_Y(int y_angle);
     void Move_Z(int power);
     //lol add more
+  private:
+    int motor_pin;
+    int wait_time;
+    int last_move;
+    void set_last;
 };
 
 extern Movement mvmnt;
