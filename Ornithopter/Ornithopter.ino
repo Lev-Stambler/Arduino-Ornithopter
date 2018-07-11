@@ -6,16 +6,17 @@
 #include "Movement.h"
 
 bool is_hover;
+/*
+* is hover is used to determine whether the arduino is in hover or control mode
+*/
 
 void setup() 
 {
   Serial.begin(9600);
   Serial.println("STARTED");
-//  Accel = Acceleration();
-   recevr.SETUP();
+  recevr.SETUP();
   recevr.getMovementCommands();
   AccMeter.SETUP();
-  // put your setup code here, to run once:
   AccMeter.Accel_State(&Accel);
   Serial.print("Desired:"); Serial.print(Accel.X_Acc); Serial.print(", "); Serial.println(Accel.Y_Acc); 
   calculator.Desire_X = Accel.X_Acc;
@@ -39,7 +40,6 @@ void loop()
     AccMeter.Accel_State(&Accel);
     calculator.Power_Fixer(Accel.X_Acc, Accel.Y_Acc, Accel.Z_Acc);
   }
-//  Serial.print("Power: "); S/erial.println(calculator.Z_Power);
   else
   {
     mvmnt.Move_X(*temp);
