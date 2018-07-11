@@ -1,5 +1,9 @@
 #include "Acceleration.h"
 
+/*
+*Acceleration is a class which stores values from the accelerometer
+*/
+
 Acceleration::Acceleration()
 {
   X_Acc = 0;
