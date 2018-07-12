@@ -33,7 +33,9 @@ class Calculate
     int X_Corr_Factor,
     Y_Corr_Factor,
     X_Recursive_Scalar,
-    Y_Recursive_Scalar;
+    Y_Recursive_Scalar,
+    Y_fluctuator,
+    X_fluctuator;
     /*
      * Corr_Scalar scales the amount of change for every addition of change to servo angle
      * Y_Recursive_Factor is used to increase or decrease the amount of weight with every addition

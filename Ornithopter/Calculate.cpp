@@ -13,27 +13,20 @@ Calculate::Calculate()
   Ki = 5;
   Kd = 5.5;
 
-  X_Corr_Factor = 2;
-  Y_Corr_Factor = 2;
-  X_Corr_Count = 100;
-  Y_Corr_Count = 100;
+  X_Corr_Factor = 5;
+  Y_Corr_Factor = 5;
+  X_Corr_Count = 0;
+  Y_Corr_Count = 0;
   X_Angle = 90;
   Y_Angle = 90;
   Z_Power = 220;
+  X_fluctuator = 500;
+  Y_fluctuator = 900;
   pi = 3.14159265358979323846;
   Wait_Cycle = 10;
-  //motor 6, x 9, y 11 z
-  mvmnt.SETUP(6, 9, 11);
+  //motor 6, x 3, y 11 z
+  mvmnt.SETUP(9, 10, 11);
   CalcPID.SETUP(&Z_Acceleration, &Desire_Z, &Downwards_Force, Kp, Ki, Kd);
-  mvmnt.Move_X(X_Angle);
-
-  delayMicroseconds(100000);
-  
-  mvmnt.Move_Y(Y_Angle);
-
-  delayMicroseconds(100000);
-  
-  mvmnt.Move_Z(int(Z_Power));
 }
 
 
@@ -122,7 +115,7 @@ void Calculate::XY_Correction(int X_Acc, int Y_Acc, int Corr_Time)
   int former_Y = Y_Angle;
   
   if(!if_X_Corr)
-    X_Angle = Get_Servo_Angle(X_Acc, former_X, Desire_X, 500, X_Corr_Factor);
+    X_Angle = Get_Servo_Angle(X_Acc, former_X, Desire_X, X_fluctuator, X_Corr_Factor);
   
   else
   {
@@ -136,7 +129,7 @@ void Calculate::XY_Correction(int X_Acc, int Y_Acc, int Corr_Time)
   }
 
   if(!if_Y_Corr)
-    Y_Angle = Get_Servo_Angle(Y_Acc, former_Y, Desire_Y, 500, Y_Corr_Factor);
+    Y_Angle = Get_Servo_Angle(Y_Acc, former_Y, Desire_Y, Y_fluctuator, Y_Corr_Factor);
   else
   {
     if(Y_Corr_Count > Wait_Cycle)
@@ -152,7 +145,6 @@ void Calculate::XY_Correction(int X_Acc, int Y_Acc, int Corr_Time)
   {
     Serial.print("WOW X Moved: ");
     Serial.println(X_Angle);
-    mvmnt.Move_X(X_Angle);
     if_X_Corr = true;
   }
     
@@ -160,9 +152,12 @@ void Calculate::XY_Correction(int X_Acc, int Y_Acc, int Corr_Time)
   {
     Serial.print("WOW Y Moved: ");
     Serial.println(Y_Angle);
-    mvmnt.Move_Y(Y_Angle);
     if_Y_Corr = true;
   }
+  
+  mvmnt.Move_X(X_Angle);
+  mvmnt.Move_Y(Y_Angle);
+
 }
 
 /*

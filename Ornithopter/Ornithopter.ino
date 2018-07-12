@@ -6,6 +6,7 @@
 #include "Movement.h"
 
 bool is_hover= true;
+int* temp;
 /*
 * is hover is used to determine whether the arduino is in hover or control mode
 */
@@ -24,9 +25,10 @@ void setup()
   calculator.Desire_Z = Accel.Z_Acc;
 }
 
+
 void loop() 
 {
-  int * temp = recevr.getMovementCommands();
+   temp = recevr.getMovementCommands();
   if(*(temp + 4) == 1)
   {
     is_hover = true;

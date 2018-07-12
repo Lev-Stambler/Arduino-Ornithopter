@@ -1,11 +1,11 @@
 #include "Arduino.h"
 #include "Movement.h"
-#include "Servo.h"
+#include "SoftwareServo.h"
 
 #include <Servo.h>
 
-Servo servo_X;
-Servo servo_Y;
+SoftwareServo servo_X;
+SoftwareServo servo_Y;
 
 
 
@@ -15,7 +15,6 @@ Servo servo_Y;
 
 Movement::Movement()
 {
-  
 }
 
 void Movement::SETUP(int X_pin, int Y_pin, int Motor_Pin)
@@ -24,6 +23,9 @@ void Movement::SETUP(int X_pin, int Y_pin, int Motor_Pin)
   servo_Y.attach(Y_pin);
   pinMode(Motor_Pin, OUTPUT);
   motor_pin = Motor_Pin;
+  servo_X.write(90);
+  servo_Y.write(90);
+  delayMicroseconds(100000);
 }
 
 /*
@@ -32,9 +34,7 @@ void Movement::SETUP(int X_pin, int Y_pin, int Motor_Pin)
 
 void Movement::Move_X(int x_angle)
 {
-  servo_X.write(x_angle);
-  last_move = millis();
-  
+  set_servo(&last_x_move, &servo_X, x_angle, false, &last_x_angle);  
 }
 
 /*
@@ -43,14 +43,36 @@ void Movement::Move_X(int x_angle)
 
 void Movement::Move_Y(int y_angle)
 {
-  servo_Y.write(y_angle);
-//  delayMicroseconds(15000);
+  set_servo(&last_y_move, &servo_Y, y_angle, false, &last_y_angle);
+}
+ 
+
+void Movement::set_servo(int* last_move, SoftwareServo* servo, int angle, bool overide_wait, int* last_angle)
+{
+  if(!overide_wait)
+  {
+    if(millis() - *last_move > 50)
+    {
+      servo->write(angle);
+//      Serial.print("servo moved: "); Serial.println(angle);
+//    delayMicroseconds(100000);
+      *last_move = millis();
+      *last_angle = angle;
+    }
+    else
+    {
+//    Serial.println("SORRY");
+//      Serial.print("servo moved in else: "); Serial.println(*last_angle);
+      servo->write(*last_angle);
+    }
+  }
+  else
+    servo->write(angle);
+  SoftwareServo::refresh();
 }
 
-
-//void Movement::set_last(int* last_move, 
 /*
-*controll movement in the z direction vai pulse with modulation (increase or decrease power being sent to wings)
+*controll movement in the z direction via pulse with modulation (increase or decrease power being sent to wings)
 */
 
 void Movement::Move_Z(int power)
@@ -59,4 +81,8 @@ void Movement::Move_Z(int power)
 //  Serial.print("Z POWER: "); Serial.println(power);
   if(power > 255) power = 255;
   analogWrite(motor_pin, power);
-}                       
+}        
+
+
+
+Movement mvmnt = Movement();

@@ -11,12 +11,12 @@
 #define __RF24_CONFIG_H__
 
 #if ARDUINO < 100
-#include <WProgram.h>
+#include "WProgram.h"
 #else
-#include <Arduino.h>
+#include "Arduino.h"
 #endif
 
-#include <stddef.h>
+#include "stddef.h"
 
 // Stuff that is normally provided by Arduino
 #ifdef ARDUINO
