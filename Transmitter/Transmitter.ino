@@ -39,8 +39,8 @@ void loop() {
   Serial.println(Is_Hovering);
    while (Serial.available() > 0 && temp < 4)
    {  
-      acc_data[0] = map(X_Pin, 0, 1023, 0, 180);
-      acc_data[1] = map(Y_Pin, 0, 1023, 0, 180); 
+      acc_data[0] = map(X_Pin, 0, 1023, 20, 150);
+      acc_data[1] = map(Y_Pin, 0, 1023, 20, 150); 
       acc_data[2] = map(Z_Pin, 0, 1023, 0, 255);
       acc_data[3] = Is_Hovering;
       temp++;
