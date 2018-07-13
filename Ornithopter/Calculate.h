@@ -15,7 +15,6 @@ class Calculate
     double Downwards_Force;
     double Z_Acceleration;
     int Wait_Cycle;
-    //lol add more
   private:
     void XY_Correction(int X_Acc, int Y_Acc, int Corr_Time);
     void Z_Correction_PID(int Z_Acc);

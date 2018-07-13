@@ -47,22 +47,25 @@ void Movement::Move_Y(int y_angle)
 }
  
 
+
+/*
+ * this function sets the servo position. It creates a forcible wait of 20 miliseconds between ever servo move.
+ */
+
 void Movement::set_servo(int* last_move, SoftwareServo* servo, int angle, bool overide_wait, int* last_angle)
 {
   if(!overide_wait)
   {
-    if(millis() - *last_move > 50)
+    if(millis() - *last_move > 20)
     {
       servo->write(angle);
-//      Serial.print("servo moved: "); Serial.println(angle);
-//    delayMicroseconds(100000);
+
       *last_move = millis();
       *last_angle = angle;
     }
     else
     {
-//    Serial.println("SORRY");
-//      Serial.print("servo moved in else: "); Serial.println(*last_angle);
+      //hold servo position
       servo->write(*last_angle);
     }
   }

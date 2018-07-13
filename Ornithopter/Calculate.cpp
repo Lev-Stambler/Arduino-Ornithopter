@@ -21,11 +21,11 @@ Calculate::Calculate()
   Y_Angle = 90;
   Z_Power = 220;
   X_fluctuator = 500;
-  Y_fluctuator = 900;
+  Y_fluctuator = 500;
   pi = 3.14159265358979323846;
   Wait_Cycle = 10;
   //motor 6, x 3, y 11 z
-  mvmnt.SETUP(9, 10, 11);
+  mvmnt.SETUP(9, 3, 11);
   CalcPID.SETUP(&Z_Acceleration, &Desire_Z, &Downwards_Force, Kp, Ki, Kd);
 }
 
