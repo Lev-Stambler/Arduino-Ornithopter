@@ -2,12 +2,14 @@
 #include "Receiver.h"
 //#include "Movement.h"
 
+#include <RH_ASK.h>
+#include <SPI.h>
 //#include "Manual.h"
 //#include <SPI.h>
 //#include <nRF24L01.h>
 //#include <RF24.h>
-const uint64_t pipe = 0xE8E1F0F0E1LL;
-RF24 radio (9,10);
+RH_ASK reciever;
+
 
 /*
 * This class Interfaces with the RF Reciever module
@@ -23,9 +25,9 @@ Receiver::Receiver(){
 
 void Receiver::SETUP()
 {
- radio.begin();
- radio.openReadingPipe (1,pipe);
- radio.startListening();
+ if (!reciever.init())
+         Serial.println("init failed");
+
 //receive data transmitted to manually controll the ornithopter  
 }
 
@@ -36,9 +38,19 @@ void Receiver::SETUP()
 
 int* Receiver:: getMovementCommands()
 {
+    uint8_t buf[16]; 
+    uint8_t buflen = sizeof(buf);
+    if (driver.recv(buf, &buflen)) // Non-blocking
+    {
+      int i;
+      // Message with a good checksum received, dump it.
+      Serial.print("Message: ");
+      Serial.println((char*)buf);         
+    }
+
   int* mem;
   int data_received [3];
-  radio.read(data_received, sizeof(data_received));
+//  radio.read(data_r/eceived, sizeof(data_received));
   mem = &data_received[0];
 //  mvmnt.Move_X(data_received[0]);
 //  mvmnt.Move_Y(data_received[1]);
