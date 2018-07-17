@@ -57,8 +57,8 @@ void loop()
 
     uint8_t *umsg = new uint8_t[4];
     char *msg = new char[4];
-    umsg[0] = map(X_val, 0, 1023, 0, 255);
-    umsg[1] = map(Y_val, 0, 1023, 0, 255);
+    umsg[0] = map(X_val, 0, 1023, 0, 180);
+    umsg[1] = map(Y_val, 0, 1023, 0, 180);
     umsg[2] = map(Z_val, 0, 1023, 0, 255);
     umsg[3] = is_Hovering;
 
