@@ -3,6 +3,7 @@
 #include "Calculate.h"
 #include "Receiver.h"
 #include "Movement.h"
+#include "Plotter.h"
 
 const int RFPin = 2;
 bool is_hover= true;
@@ -13,7 +14,7 @@ uint8_t* temp;
 
 void setup() 
 {
-  Serial.begin(9600);
+  Serial.begin(57600);
   Serial.println("STARTED");
   recevr.SETUP();
 //  recevr.getMovementCommands(RH_ASK* receiver);
@@ -45,6 +46,7 @@ void loop()
   {
     AccMeter.Accel_State(&Accel);
     calculator.Power_Fixer(Accel.X_Acc, Accel.Y_Acc, Accel.Z_Acc);
+    Plot.Printer();
     delay(10);
   }
   else

@@ -148,15 +148,15 @@ void Calculate::XY_Correction(int X_Acc, int Y_Acc, int Corr_Time)
   
   if(former_X != X_Angle)
   {
-    Serial.print("WOW X Moved: ");
-    Serial.println(X_Angle);
+    //Serial.print("WOW X Moved: ");
+    //Serial.println(X_Angle);
     if_X_Corr = true;
   }
     
   if(former_Y != Y_Angle)
   {
-    Serial.print("WOW Y Moved: ");
-    Serial.println(Y_Angle);
+    //Serial.print("WOW Y Moved: ");
+    //Serial.println(Y_Angle);
     if_Y_Corr = true;
   }
   

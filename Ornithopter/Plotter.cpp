@@ -6,18 +6,24 @@
 
 Plotter :: Plotter(){
   //plot out the values from the accelerometer and servos 
-  Serial.print(Accel.X_Acc);
+  
+}
+
+void Plotter:: SETUP(){
+  
+}
+
+void Plotter::Printer()
+{
+  Serial.print(map(Accel.X_Acc, 0, 4000, 0, 180));
   Serial.print(" "); 
-  Serial.print(Accel.Y_Acc); 
+  Serial.print(map(Accel.Y_Acc, 0, 4000, 0 ,180)); 
   Serial.print (" "); 
   Serial.print(calculator.X_Angle); 
   Serial.print(" ");
   Serial.println(calculator.Y_Angle);
 }
 
-void Plotter:: SETUP(){
-  
-}
 Plotter Plot = Plotter();
   
   

@@ -6,6 +6,7 @@ class Plotter
   public:
     Plotter();
     void SETUP();
+    void Printer();
 };
 
 extern Plotter Plot;
