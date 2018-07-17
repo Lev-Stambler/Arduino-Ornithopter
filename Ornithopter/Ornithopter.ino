@@ -8,7 +8,7 @@
 
 const int RFPin = 2;
 bool is_hover= false;
-int* temp;
+uint8_t* temp;
 /*
 * is hover is used to determine whether the arduino is in hover or control mode
 */
@@ -32,19 +32,14 @@ void setup()
 
 void loop() 
 {
-    temp = recevr.getMovementCommands();
-//   Serial.print("IR TANS");
-//   Serial.println(*temp);
-//   Serial.println(*(temp + 1));
-//   Serial.println(*(temp + 2));
-//   Serial.println(*(temp + 3));
-   
-//   Serial.println(*temp);
-  if(*(temp + 3) == 1)
+  temp = recevr.getMovementCommands();
+
+
+  if(*(temp + 3) == 255)
   {
     is_hover = true;
   }
-  else if(*(temp + 3) == -1)
+  else if(*(temp + 3) == 1)
   {
     is_hover = false;
   }

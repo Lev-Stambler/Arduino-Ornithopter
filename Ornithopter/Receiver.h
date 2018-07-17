@@ -8,11 +8,12 @@
 class Receiver
 {
   public:
-  Receiver();
-  void SETUP();
-  //struct data_received
-  int* getMovementCommands();
-  
+    Receiver();
+    void SETUP();
+    //struct data_received
+      uint8_t* getMovementCommands();
+  private:
+    uint8_t msg[4];
   //
 };
 

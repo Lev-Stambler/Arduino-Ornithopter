@@ -25,7 +25,7 @@ Calculate::Calculate()
   pi = 3.14159265358979323846;
   Wait_Cycle = 10;
   //motor 6, x 3, y 11 z
-  mvmnt.SETUP(9, 3, 11);
+  mvmnt.SETUP(9, 3, 12);
   CalcPID.SETUP(&Z_Acceleration, &Desire_Z, &Downwards_Force, Kp, Ki, Kd);
 }
 

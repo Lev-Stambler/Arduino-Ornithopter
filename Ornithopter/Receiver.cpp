@@ -34,41 +34,26 @@ void Receiver::SETUP()
 * the array storring the commands can be found
 */
 
-int* Receiver:: getMovementCommands()
+uint8_t* Receiver:: getMovementCommands()
 {
-  int *mem;
-  uint8_t msg[4];
-  int data_received[4];
-  uint8_t msglen = sizeof(msglen);
-  byte senderId = 0;
-  char* recvd;
-  byte packageId = 0;
-  if(receiver.recv(msg, &msglen))
+  uint8_t *mem;
+
+  uint8_t msglen = sizeof(msg);
+
+  if(receiver.recv(msg, &msglen))// &msglen))
   {
     int i;
-     Serial.print("Message: ");
-      Serial.println(msg[0]); 
-  }
-  else
-  {
-//    Serial.println("NONE");
-  }
-//  byte len = receiver.recvPackage((byte *)msg, &senderId, &packageId);
-//  Serial.println("ASAS");
 
+    Serial.print("Message: ");
+    Serial.println(msg[0]); 
+    Serial.println(msg[1]);
+    Serial.println(msg[2]);  
+    Serial.println(msg[3]); 
+  }
   
- 
+  mem = &msg[0];
   
-  mem = &data_received[0];
-  
-//  mvmnt.Move_X(data_received[0]);
-//  mvmnt.Move_Y(data_received[1]);
-//  mvmnt.Move_Z(data_received[2]);  
 
-//  X_received = data_received[0];
-//  Y_received = data_received[1];
-//  Z_received = data_received[2];
-//  remote.SETUP(data_received coordinates);
   return(mem); //import the location in memory the data to controll the ornithopter data is stored
 }
 
