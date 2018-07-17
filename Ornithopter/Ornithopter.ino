@@ -1,11 +1,13 @@
 
+
 #include "Accelerometer.h"
 #include "Acceleration.h"
 #include "Calculate.h"
 #include "Receiver.h"
 #include "Movement.h"
 
-bool is_hover= true;
+const int RFPin = 2;
+bool is_hover= false;
 int* temp;
 /*
 * is hover is used to determine whether the arduino is in hover or control mode
@@ -16,19 +18,25 @@ void setup()
   Serial.begin(9600);
   Serial.println("STARTED");
   recevr.SETUP();
-  recevr.getMovementCommands();
+//  recevr.getMovementCommands(RH_ASK* receiver);
   AccMeter.SETUP();
   AccMeter.Accel_State(&Accel);
   Serial.print("Desired:"); Serial.print(Accel.X_Acc); Serial.print(", "); Serial.println(Accel.Y_Acc); 
   calculator.Desire_X = Accel.X_Acc;
   calculator.Desire_Y = Accel.Y_Acc;
   calculator.Desire_Z = Accel.Z_Acc;
+
+  
 }
 
 
 void loop() 
 {
-   temp = recevr.getMovementCommands();
+    temp = recevr.getMovementCommands();
+//   Serial.print("IR TANS");
+//   Serial.println(*temp);
+   
+//   Serial.println(*temp);
   if(*(temp + 4) == 1)
   {
     is_hover = true;
@@ -45,10 +53,10 @@ void loop()
   }
   else
   {
-    mvmnt.Move_X(*temp);
-    mvmnt.Move_Y(*(temp+1));
-    mvmnt.Move_Z(*(temp+2));
-    delay(100);
+//    mvmnt.Move_X(*temp);
+//    mvmnt.Move_Y(*(temp+1));
+//    mvmnt.Move_Z(*(temp+2));
+    delay(10);
   }
 }
 

@@ -1,6 +1,6 @@
 #include "Arduino.h"
 #include "Accelerometer.h"
-#include<Wire.h>
+#include <Wire.h>
 const int MPU_addr=0x68; 
 #define Power_Register 0x2D
 

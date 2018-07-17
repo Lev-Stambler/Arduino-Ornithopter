@@ -2,13 +2,13 @@
 #include "Receiver.h"
 //#include "Movement.h"
 
+//#include <RFReceiver.h>
+//#include <PinChangeInterruptHandler.h>
 #include <RH_ASK.h>
+
 #include <SPI.h>
 //#include "Manual.h"
-//#include <SPI.h>
-//#include <nRF24L01.h>
-//#include <RF24.h>
-RH_ASK reciever;
+RH_ASK receiver;
 
 
 /*
@@ -25,10 +25,8 @@ Receiver::Receiver(){
 
 void Receiver::SETUP()
 {
- if (!reciever.init())
+  if (!receiver.init())
          Serial.println("init failed");
-
-//receive data transmitted to manually controll the ornithopter  
 }
 
 /*
@@ -38,19 +36,30 @@ void Receiver::SETUP()
 
 int* Receiver:: getMovementCommands()
 {
-    uint8_t buf[16]; 
-    uint8_t buflen = sizeof(buf);
-    if (driver.recv(buf, &buflen)) // Non-blocking
-    {
-      int i;
-      // Message with a good checksum received, dump it.
-      Serial.print("Message: ");
-      Serial.println((char*)buf);         
-    }
+  uint8_t msg[17];
+  uint8_t msglen = sizeof(msglen);
+  byte senderId = 0;
+  byte packageId = 0;
+  if(receiver.recv(msg, &msglen))
+  {
+     Serial.print("Message: ");
+      Serial.println((char*)msg);  
+  }
+  else
+  {
+//    Serial.println("NONE");
+  }
+//  byte len = receiver.recvPackage((byte *)msg, &senderId, &packageId);
+//  Serial.println("ASAS");
 
   int* mem;
   int data_received [3];
-//  radio.read(data_r/eceived, sizeof(data_received));
+  char first[3];
+  for(int i = 0; i < 3; i++)
+  {
+    first[i] = msg[i];
+  }
+  data_received[0] = (int)first;
   mem = &data_received[0];
 //  mvmnt.Move_X(data_received[0]);
 //  mvmnt.Move_Y(data_received[1]);
