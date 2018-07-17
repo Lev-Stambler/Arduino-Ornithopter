@@ -16,7 +16,7 @@ void Accelerometer::SETUP()
   Wire.beginTransmission(MPU_addr);
   Wire.write(0x6B);//Power_Register);  // PWR_MGMT_1 register
   Wire.write(0x00);   //0x6B  // set to zero (wakes up the MPU-6050)
-  Wire.endTransmission(0);
+  Wire.endTransmission(true);
 }
 
 /*

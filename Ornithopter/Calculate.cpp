@@ -20,12 +20,12 @@ Calculate::Calculate()
   X_Angle = 90;
   Y_Angle = 90;
   Z_Power = 220;
-  X_fluctuator = 500;
-  Y_fluctuator = 500;
+  X_fluctuator = 300;
+  Y_fluctuator = 300;
   pi = 3.14159265358979323846;
   Wait_Cycle = 10;
-  //motor 6, x 3, y 11 z
-  mvmnt.SETUP(9, 3, 12);
+  //motor 5, x 6, y 10 z
+  mvmnt.SETUP(5, 6, 10);
   CalcPID.SETUP(&Z_Acceleration, &Desire_Z, &Downwards_Force, Kp, Ki, Kd);
 }
 
@@ -56,7 +56,7 @@ void Calculate::Z_Correction_PID(int Z_Acc)
   CalcPID.Z_Fix();
   Z_Power = Downwards_Force / (cos(y_angle_radians) * cos(x_angle_radians));
   mvmnt.Move_Z(int(Z_Power));
-//  Serial.print("Z POWER PID: "); Serial.print(Z_Power); Serial.print(" Downwards: "); Serial.println(Downwards_Force);
+//  Serial.print("Z POWER PID: /"); Serial.print(Z_Power); Serial.print(" Dow/nwards: "); Serial.println(Downwards_Force);
 }
 /*
   NONE PID CORRECTION FACTOR
@@ -113,7 +113,12 @@ void Calculate::XY_Correction(int X_Acc, int Y_Acc, int Corr_Time)
 {
   int former_X = X_Angle;
   int former_Y = Y_Angle;
-  
+//  Serial.print("X: 0");
+//  Serial.println(X_Acc);
+//  
+//  Serial.print("Y: ");
+//  Serial.println(Y_Acc);
+//  
   if(!if_X_Corr)
     X_Angle = Get_Servo_Angle(X_Acc, former_X, Desire_X, X_fluctuator, X_Corr_Factor);
   

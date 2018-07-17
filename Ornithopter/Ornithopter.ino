@@ -1,5 +1,3 @@
-
-
 #include "Accelerometer.h"
 #include "Acceleration.h"
 #include "Calculate.h"
@@ -7,7 +5,7 @@
 #include "Movement.h"
 
 const int RFPin = 2;
-bool is_hover= false;
+bool is_hover= true;
 uint8_t* temp;
 /*
 * is hover is used to determine whether the arduino is in hover or control mode
