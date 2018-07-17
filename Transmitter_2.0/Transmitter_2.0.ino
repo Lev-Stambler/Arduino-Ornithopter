@@ -8,7 +8,7 @@ int buttonPin = 2;
 int buttonPrev;
 
 #define NODE_ID          1
-#define OUTPUT_PIN       11
+//#define OUTPUT_PIN       11
 
 int X_val, Y_val, Z_val;
 int X_form = 0, Y_form = 0, Z_form = 0;
@@ -60,14 +60,13 @@ void loop()
     umsg[0] = map(X_val, 0, 1023, 0, 255);
     umsg[1] = map(Y_val, 0, 1023, 0, 255);
     umsg[2] = map(Z_val, 0, 1023, 0, 255);
-    umsg[3] = (is_Hovering + 10);
-
     umsg[3] = is_Hovering;
+
     for(int i = 0; i < 1; i++)
     {
       Serial.println(umsg[1]);
       
-      transmitter.send(umsg, strlen(umsg + 1));
+      transmitter.send(umsg, 4);//strlen(umsg));
       
       transmitter.waitPacketSent();
       delay(50);
