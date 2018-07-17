@@ -7,6 +7,9 @@ int buttonState;             // the current reading from the input pin
 int buttonPin = 2;
 int buttonPrev;
 
+#define NODE_ID          1
+#define OUTPUT_PIN       11
+
 int X_val, Y_val, Z_val;
 int X_form = 0, Y_form = 0, Z_form = 0;
 const int analog_X = 0;
@@ -17,15 +20,14 @@ is_Hover_Prev = 0;
 
 RH_ASK transmitter;
 
+
 void setup() 
 {
   // put your setup code here, to run once:
   Serial.begin(9600);
   pinMode(buttonPin, INPUT_PULLUP);
-  if(!transmitter.init())
-  {
-    Serial.println("ERROR");
-  }
+ if (!transmitter.init())
+         Serial.println("init failed");
 }
 
 void loop() 
@@ -52,9 +54,24 @@ void loop()
   {
     String msg_str = String(X_val) + "," + String(Y_val) + "," + String(Z_val) + "," + String(is_Hovering);
     Serial.println(msg_str);
-    const char *msg = msg_str.c_str();
-    transmitter.send((uint8_t *)msg, strlen(msg));
-    transmitter.waitPacketSent();
+
+    uint8_t *umsg = new uint8_t[4];
+    char *msg = new char[4];
+    umsg[0] = map(X_val, 0, 1023, 0, 255);
+    umsg[1] = map(Y_val, 0, 1023, 0, 255);
+    umsg[2] = map(Z_val, 0, 1023, 0, 255);
+    umsg[3] = (is_Hovering + 10);
+
+    umsg[3] = is_Hovering;
+    for(int i = 0; i < 1; i++)
+    {
+      Serial.println(umsg[1]);
+      
+      transmitter.send(umsg, strlen(umsg + 1));
+      
+      transmitter.waitPacketSent();
+      delay(50);
+    }
     X_form = X_val;
     Y_form = Y_val;
     Z_form = Z_val;
