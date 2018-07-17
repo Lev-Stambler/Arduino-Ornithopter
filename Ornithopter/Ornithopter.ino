@@ -35,13 +35,16 @@ void loop()
     temp = recevr.getMovementCommands();
 //   Serial.print("IR TANS");
 //   Serial.println(*temp);
+//   Serial.println(*(temp + 1));
+//   Serial.println(*(temp + 2));
+//   Serial.println(*(temp + 3));
    
 //   Serial.println(*temp);
-  if(*(temp + 4) == 1)
+  if(*(temp + 3) == 1)
   {
     is_hover = true;
   }
-  else if(*(temp + 4) == 0)
+  else if(*(temp + 3) == -1)
   {
     is_hover = false;
   }
@@ -53,9 +56,9 @@ void loop()
   }
   else
   {
-//    mvmnt.Move_X(*temp);
-//    mvmnt.Move_Y(*(temp+1));
-//    mvmnt.Move_Z(*(temp+2));
+    mvmnt.Move_X(*temp);
+    mvmnt.Move_Y(*(temp+1));
+    mvmnt.Move_Z(*(temp+2));
     delay(10);
   }
 }

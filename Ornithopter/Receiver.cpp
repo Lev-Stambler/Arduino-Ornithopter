@@ -36,14 +36,18 @@ void Receiver::SETUP()
 
 int* Receiver:: getMovementCommands()
 {
-  uint8_t msg[17];
+  int *mem;
+  uint8_t msg[4];
+  int data_received[4];
   uint8_t msglen = sizeof(msglen);
   byte senderId = 0;
+  char* recvd;
   byte packageId = 0;
   if(receiver.recv(msg, &msglen))
   {
+    int i;
      Serial.print("Message: ");
-      Serial.println((char*)msg);  
+      Serial.println(msg[0]); 
   }
   else
   {
@@ -52,15 +56,11 @@ int* Receiver:: getMovementCommands()
 //  byte len = receiver.recvPackage((byte *)msg, &senderId, &packageId);
 //  Serial.println("ASAS");
 
-  int* mem;
-  int data_received [3];
-  char first[3];
-  for(int i = 0; i < 3; i++)
-  {
-    first[i] = msg[i];
-  }
-  data_received[0] = (int)first;
+  
+ 
+  
   mem = &data_received[0];
+  
 //  mvmnt.Move_X(data_received[0]);
 //  mvmnt.Move_Y(data_received[1]);
 //  mvmnt.Move_Z(data_received[2]);  
