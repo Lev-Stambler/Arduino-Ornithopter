@@ -27,8 +27,9 @@ void Plotter::Smooth(){
   // subtract the last reading:
   totalAccelX = totalAccelX - accelX[currentAccel];
   totalAccelY = totalAccelY - accelY[currentAccel];
-  accelX[currentAccel] = map(Accel.X_Acc, 0, 4000, 0, 180);
-  accelY[currentAccel] = map(Accel.Y_Acc, 0, 4000, 0, 180);
+  // acceleration is a scale of 0 to 65536: 16 bits
+  accelX[currentAccel] = map(Accel.X_Acc, 0, 65535, 0, 180);
+  accelY[currentAccel] = map(Accel.Y_Acc, 0, 65535, 0, 180);
   totalAccelX = totalAccelX + accelX[currentAccel];
   totalAccelY = totalAccelY + accelY[currentAccel];
   // advance to the next position in the array:
