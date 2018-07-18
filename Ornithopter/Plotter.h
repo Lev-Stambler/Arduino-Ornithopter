@@ -8,6 +8,7 @@ class Plotter
     void SETUP();
     void Smooth();
     void Printer();
+  private:
     int currentAccel,              
     totalAccelX,                 
     averageAccelX;      

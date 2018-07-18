@@ -4,7 +4,7 @@
 class Calculate
 {
   public:
-    Calculate();
+    Calculate(int X_Pin, int Y_Pin, int Z_Pin);
     void Power_Fixer(int X_Acc, int Y_Acc, int Z_Acc);
     int X_Angle;
     int Y_Angle;

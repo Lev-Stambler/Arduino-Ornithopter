@@ -7,11 +7,11 @@
 
 //initialize
 
-Calculate::Calculate()
+Calculate::Calculate(int X_Pin, int Y_Pin, int Z_Pin)
 {
-  Kp = 2;
-  Ki = 5;
-  Kd = 5.5;
+  Kp = 5;
+  Ki = 2;
+  Kd = 0;
 
   X_Corr_Factor = 5;
   Y_Corr_Factor = 5;
@@ -24,7 +24,6 @@ Calculate::Calculate()
   Y_fluctuator = 300;
   pi = 3.14159265358979323846;
   Wait_Cycle = 10;
-  //motor 5, x 6, y 10 z
   mvmnt.SETUP(5, 6, 10);
   CalcPID.SETUP(&Z_Acceleration, &Desire_Z, &Downwards_Force, Kp, Ki, Kd);
 }
@@ -113,12 +112,7 @@ void Calculate::XY_Correction(int X_Acc, int Y_Acc, int Corr_Time)
 {
   int former_X = X_Angle;
   int former_Y = Y_Angle;
-//  Serial.print("X: 0");
-//  Serial.println(X_Acc);
-//  
-//  Serial.print("Y: ");
-//  Serial.println(Y_Acc);
-//  
+  
   if(!if_X_Corr)
     X_Angle = Get_Servo_Angle(X_Acc, former_X, Desire_X, X_fluctuator, X_Corr_Factor);
   
@@ -148,15 +142,11 @@ void Calculate::XY_Correction(int X_Acc, int Y_Acc, int Corr_Time)
   
   if(former_X != X_Angle)
   {
-    //Serial.print("WOW X Moved: ");
-    //Serial.println(X_Angle);
     if_X_Corr = true;
   }
     
   if(former_Y != Y_Angle)
   {
-    //Serial.print("WOW Y Moved: ");
-    //Serial.println(Y_Angle);
     if_Y_Corr = true;
   }
   
@@ -190,5 +180,5 @@ int Calculate::Get_Servo_Angle(int Acc, int Current_Ang, int Desired, int Fluctu
   return res;
 }
 
-Calculate calculator = Calculate();
+Calculate calculator = Calculate(5, 6, 10);
 

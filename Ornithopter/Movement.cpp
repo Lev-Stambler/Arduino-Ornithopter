@@ -2,7 +2,6 @@
 #include "Movement.h"
 #include "SoftwareServo.h"
 
-//#include <Servo.h>
 
 SoftwareServo servo_X;
 SoftwareServo servo_Y;

@@ -20,7 +20,7 @@ void Accelerometer::SETUP()
 }
 
 /*
-* This header file essentially interfaces with the accelerometer and stores the information in the acceleration class
+* This header file interfaces with the accelerometer and stores the information in the acceleration class which is passed in with a pointer
 */
 
 void Accelerometer::Accel_State(Acceleration* acc_state)
@@ -33,21 +33,7 @@ void Accelerometer::Accel_State(Acceleration* acc_state)
   acc_state->X_Acc = Wire.read()<<8|Wire.read();  // 0x3B (ACCEL_XOUT_H) & 0x3C (ACCEL_XOUT_L)    
   acc_state->Y_Acc = Wire.read()<<8|Wire.read();  // 0x3D (ACCEL_YOUT_H) & 0x3E (ACCEL_YOUT_L)
   acc_state->Z_Acc = Wire.read()<<8|Wire.read();  // 0x3F (ACCEL_ZOUT_H) & 0x40 (ACCEL_ZOUT_L)
-//  acc_state->X_Gy = Wire.read()<<8|Wire.read();  // 0x41 (TEMP_OUT_H) & 0x42 (TEMP_OUT_L)
-//  acc_state->Y_Gy = Wire.read()<<8|Wire.read();  // 0x43 (GYRO_XOUT_H) & 0x44 (GYRO_XOUT_L)
-//  acc_state->Z_Gy = Wire.read()<<8|Wire.read();  // 0x45 (GYRO_YOUT_H) & 0x46 (GYRO_YOUT_L)
-//  GyZ=Wire.read()<<8|Wire.read();  // 0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
-//  Serial.print("AcX = "); Serial.print(acc_state->X_Acc + "\n");
-//  Serial.print(" AcY = "); Serial.print(acc_state->Y_Acc + "\n");
-//  Serial.print(" AcZ = "); Serial.print(acc_state->Z_Acc + "\n");
-////  Serial.print(" | Tmp = "); Serial.print(Tmp/340.00+36.53);  //equation for temperature in degrees C from datashee
-//  Serial.print(" | GyX = "); Serial.print(acc_state->X_Gy);
-//  Serial.print(" | GyY = "); Serial.print(acc_state->Y_Gy);
-//  Serial.print(" | GyZ = "); Serial.println(acc_state->Z_Gy);
 
-  
-  //Get rid of serial print
-  //Find how to just get AcX AcY etc rather than all at once
 }
 
 Accelerometer AccMeter = Accelerometer();

@@ -1,6 +1,3 @@
-
-//#include <Servo.h>
-
 #include "SoftwareServo.h"
 
 

@@ -1,6 +1,5 @@
 #include "Acceleration.h"
 #include "Calculate.h"
-//#include "Movement.h"
 #include "Plotter.h"
 #include "Arduino.h"
 
@@ -20,8 +19,8 @@ Plotter :: Plotter(){
 }
 
 void Plotter:: SETUP(){
-    for (int thisReading = 0; thisReading < accelReadings; thisReading++) accelX[thisReading] = 0;
-    for (int thisReading = 0; thisReading < accelReadings; thisReading++) accelY[thisReading] = 0;//you could do this in one for loop if you wanted to (maybe)
+    for (int i = 0; i < accelReadings; i++) accelX[i] = 0;
+    for (int i = 0; i < accelReadings; i++) accelY[i] = 0;
 }
 
 void Plotter::Smooth(){
@@ -34,7 +33,6 @@ void Plotter::Smooth(){
   totalAccelY = totalAccelY + accelY[currentAccel];
   // advance to the next position in the array:
   currentAccel = currentAccel + 1;
-  // if we're at the end of the array...
   if (currentAccel >= accelReadings && currentAccel >= accelReadings) currentAccel = 0;//you probably don't need && here
   averageAccelX = totalAccelX / accelReadings;
   averageAccelY = totalAccelY / accelReadings; 
