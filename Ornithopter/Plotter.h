@@ -9,12 +9,15 @@ class Plotter
     void Smooth();
     void Printer();
   private:
-    int currentAccel,              
-    totalAccelX,                 
+    int currentAccel;              
+    int totalAccelX,                 
     averageAccelX;      
-    //int current.accelY;
     int totalAccelY,
     averageAccelY;
+    int totalAccelZ,
+    averageAccelZ;
+
+    
 
 };
 
