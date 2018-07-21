@@ -1,10 +1,11 @@
 X = [ 1 2 3; 4 5 6; 7 8 9];
 Y = [ 1 2 3; 4 5 6; 7 8 9];
+%take this out when we get real data
 title('Ornithopter')
 xlabel('Time')
 yyaxis left
 ylabel('Acceleration') 
 yyaxis right
-ylabel ('Voltage')
+ylabel ('Frequency (volts)')
 plot (X, Y)
 %we'll need to modify this code once we have the data (colouring the lines, labeling more stuff, etc...)
