@@ -15,11 +15,11 @@ uint8_t* temp;
 void setup() 
 {
   Serial.begin(57600);
-  Serial.println("STARTED");
+//  Serial.println("STARTED");
   recevr.SETUP();
   AccMeter.SETUP();
   AccMeter.Accel_State(&Accel);
-  Serial.print("Desired:"); Serial.print(Accel.X_Acc); Serial.print(", "); Serial.println(Accel.Y_Acc); 
+//  Serial.print("Desired:"); Serial.print(Accel.X_Acc); Serial.print(", "); Serial.println(Accel.Y_Acc); 
   calculator.Desire_X = Accel.X_Acc;
   calculator.Desire_Y = Accel.Y_Acc;
   calculator.Desire_Z = Accel.Z_Acc;  

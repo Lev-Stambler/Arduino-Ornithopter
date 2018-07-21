@@ -16,7 +16,7 @@ class Plotter
     averageAccelY;
     int totalAccelZ,
     averageAccelZ;
-
+    int counter;
     
 
 };

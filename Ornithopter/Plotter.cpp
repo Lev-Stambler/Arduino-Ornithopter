@@ -7,10 +7,11 @@ const int accelReadings = 10;
     int accelX[accelReadings];      
     int accelY[accelReadings];
     int accelZ[accelReadings];
-
+int range = 78.4 * 10;
 
 Plotter :: Plotter(){
-  //plot out the values from the accelerometer and servos 
+  //initialize all to 0's
+  counter = 0;
   currentAccel = 0;              
   totalAccelX = 0;                 
   averageAccelX = 0;         
@@ -32,9 +33,9 @@ void Plotter::Smooth(){
   totalAccelY = totalAccelY - accelY[currentAccel];
   totalAccelZ = totalAccelZ - accelZ[currentAccel];
   // acceleration is a scale of 0 to 65536: 16 bits
-  accelX[currentAccel] = map(Accel.X_Acc, -32768, 32768, -19.6, 19.6); //on a range of -2g to 2g (9.8m/s2)
-  accelY[currentAccel] = map(Accel.Y_Acc, -32768, 32768, -19.6, 19.6); //on a range of -2g to 2g (9.8m/s2)
-  accelZ[currentAccel] = map(Accel.Z_Acc, -32768, 32768, -19.6, 19.6);
+  accelX[currentAccel] = map(Accel.X_Acc, -32768, 32768, -1 * range, range); //on a range of -2g to 2g (9.8m/s2)
+  accelY[currentAccel] = map(Accel.Y_Acc, -32768, 32768, -1 * range, range); //on a range of -2g to 2g (9.8m/s2)
+  accelZ[currentAccel] = map(Accel.Z_Acc, -32768, 32768, -1 * range, range);
   totalAccelX = totalAccelX + accelX[currentAccel];
   totalAccelY = totalAccelY + accelY[currentAccel];
   totalAccelZ = totalAccelZ + accelZ[currentAccel];
@@ -49,17 +50,28 @@ void Plotter::Smooth(){
 void Plotter::Printer()
 {
   Smooth();
-  Serial.print(averageAccelX);
-  Serial.print(" "); 
-  Serial.print(averageAccelY); 
-  Serial.print(" "); 
-  Serial.print(averageAccelZ);
-  Serial.print(" ");
-  Serial.print(calculator.X_Angle); 
-  Serial.print(" ");
-  Serial.print(calculator.Y_Angle);
-  Serial.print(" ");
-  Serial.println(calculator.Z_Power);
+  if(counter >= 10)
+  {
+    Serial.print(millis());
+    Serial.print("|");//(" "); 
+    Serial.print(averageAccelX);
+    Serial.print("|");//(" "); 
+    Serial.print(averageAccelY); 
+    Serial.print("|");//(" "); 
+    Serial.print(averageAccelZ);
+    Serial.print("|");//(" ");
+    Serial.print(calculator.X_Angle); 
+    Serial.print("|");//(" ");
+    Serial.print(calculator.Y_Angle);
+    Serial.print("|");//(" ");
+    Serial.print(calculator.Z_Power);
+    Serial.print("^");
+    counter = 0;
+  }
+  else
+  {
+    counter++;
+  }
 }
 
 Plotter Plot = Plotter();
