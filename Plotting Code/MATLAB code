@@ -1,0 +1,9 @@
+X = [ 1 2 3; 4 5 6; 7 8 9];
+Y = [ 1 2 3; 4 5 6; 7 8 9];
+title('Ornithopter')
+xlabel('Time')
+yyaxis left
+ylabel('Acceleration') 
+yyaxis right
+ylabel ('Voltage')
+plot (X, Y)
