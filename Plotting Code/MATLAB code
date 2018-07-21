@@ -7,3 +7,4 @@ ylabel('Acceleration')
 yyaxis right
 ylabel ('Voltage')
 plot (X, Y)
+%we'll need to modify this code once we have the data (colouring the lines, labeling more stuff, etc...)
