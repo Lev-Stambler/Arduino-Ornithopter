@@ -7,7 +7,7 @@ const int accelReadings = 10;
     int accelX[accelReadings];      
     int accelY[accelReadings];
     int accelZ[accelReadings];
-int range = 78.4 * 10;
+int range = 39.2 * 10;
 
 Plotter :: Plotter(){
   //initialize all to 0's
