@@ -166,9 +166,10 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(933, 991);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(96, 29);
+            this.label7.Size = new System.Drawing.Size(101, 29);
             this.label7.TabIndex = 13;
-            this.label7.Text = "Z Servo";
+            this.label7.Text = "Z power";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
             // 
             // textTime
             // 
@@ -224,6 +225,7 @@
             this.MinimumSize = new System.Drawing.Size(1874, 1160);
             this.Name = "Form1";
             this.Text = "Text Converter";
+            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

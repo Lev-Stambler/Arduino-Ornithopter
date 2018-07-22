@@ -35,13 +35,13 @@ namespace SerialToGraphSplitter
 
         private void buttonStart_Click(object sender, EventArgs e)
         {
-            textTime.Text += "";
-            textXAcc.Text += "";
-            textYAcc.Text += "";
-            textAccZ.Text += "";
-            textZPower.Text += "";
-            textXServo.Text += "";
-            textYServo.Text += "";
+            textTime.Text = "";
+            textXAcc.Text = "";
+            textYAcc.Text = "";
+            textAccZ.Text = "";
+            textZPower.Text = "";
+            textXServo.Text = "";
+            textYServo.Text = "";
             int initalTime = 0;
             port.PortName = SerialPort.GetPortNames()[0];
             port.BaudRate = 57600;
@@ -55,7 +55,7 @@ namespace SerialToGraphSplitter
             bool going = true;
             long initial = DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond;
 
-            while (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - initial < 8000) 
+            while (DateTime.Now.Ticks / TimeSpan.TicksPerMillisecond - initial < 15000) 
             {
                 rawInput += Convert.ToChar(port.ReadChar()).ToString();
                 going = port.IsOpen;
@@ -83,38 +83,40 @@ namespace SerialToGraphSplitter
                     textZPower.Text += "[";
                     textXServo.Text += "[";
                     textYServo.Text += "[";
-                    initalTime = Convert.ToInt32(largeArray[i].Split('|')[0]);
+                    initalTime = Convert.ToInt32(largeArray[i].Split('|')[i]);
                 }
-
-                string[] splitted = largeArray[i].Split('|');
-                time[i] = (Convert.ToInt32(splitted[0]) - initalTime).ToString();
-                XAcc[i] = splitted[1];
-                YAcc[i] = splitted[2];
-                ZAcc[i] = splitted[3];
-                XServo[i] = splitted[4];
-                YServo[i] = splitted[5];
-                ZPower[i] = splitted[6];
-
-                
-                textTime.Text += time[i];
-                textXAcc.Text += XAcc[i];
-                textYAcc.Text += YAcc[i];
-                textAccZ.Text += ZAcc[i];
-                textZPower.Text += ZPower[i];
-                textXServo.Text += XServo[i];
-                textYServo.Text += YServo[i];
-
-                if(i < largeArray.Length - 2)
+                try
                 {
-                    textTime.Text += ",";
-                    textXAcc.Text += ",";
-                    textYAcc.Text += ",";
-                    textAccZ.Text += ",";
-                    textZPower.Text += ",";
-                    textXServo.Text += ",";
-                    textYServo.Text += ",";
-                }
+                    string[] splitted = largeArray[i].Split('|');
+                    time[i] = (Convert.ToInt32(splitted[0]) - initalTime).ToString();
+                    XAcc[i] = (Convert.ToDouble(splitted[1]) / 100).ToString();
+                    YAcc[i] = (Convert.ToDouble(splitted[2]) / 100).ToString();
+                    ZAcc[i] = (Convert.ToDouble(splitted[3]) / 100).ToString();
+                    XServo[i] = splitted[4];
+                    YServo[i] = splitted[5];
+                    ZPower[i] = splitted[6];
 
+
+                    textTime.Text += time[i];
+                    textXAcc.Text += XAcc[i];
+                    textYAcc.Text += YAcc[i];
+                    textAccZ.Text += ZAcc[i];
+                    textZPower.Text += ZPower[i];
+                    textXServo.Text += XServo[i];
+                    textYServo.Text += YServo[i];
+
+                    if (i < largeArray.Length - 2)
+                    {
+                        textTime.Text += ",";
+                        textXAcc.Text += ",";
+                        textYAcc.Text += ",";
+                        textAccZ.Text += ",";
+                        textZPower.Text += ",";
+                        textXServo.Text += ",";
+                        textYServo.Text += ",";
+                    }
+                }
+                catch (Exception ex) { Console.WriteLine(ex.Message); }
 
             }
             textTime.Text += "]";
@@ -125,5 +127,17 @@ namespace SerialToGraphSplitter
             textXServo.Text += "]";
             textYServo.Text += "]";
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+
+        }
+        
+
     }
 }
