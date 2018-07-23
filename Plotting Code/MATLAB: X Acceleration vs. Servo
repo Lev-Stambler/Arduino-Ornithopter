@@ -14,5 +14,3 @@ axis([0 inf 0 180])
 ylabel ('X Angle (Degrees)')
 
 legend([a1;a2], M1, M2)
-
-%we'll need to modify this code once we have the data (colouring the lines, labeling more stuff, etc...)
