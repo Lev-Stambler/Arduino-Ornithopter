@@ -1,3 +1,4 @@
+/*
 #ifndef Receiver_h
 #define Receiver_h
 
@@ -19,3 +20,4 @@ class Receiver
 
 extern Receiver recevr;
 #endif
+*/
