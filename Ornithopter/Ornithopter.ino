@@ -7,7 +7,7 @@
 #include "Plotter.h"
 
 const int RFPin = 2;
-bool is_hover;//= true;
+bool is_hover = false;
 int* temp;
 /*
 * is hover is used to determine whether the arduino is in hover or control mode
@@ -21,7 +21,7 @@ void setup()
   remote.SETUP();
   AccMeter.SETUP();
   AccMeter.Accel_State(&Accel);
-//  Serial.print("Desired:"); Serial.print(Accel.X_Acc); Serial.print(", "); Serial.println(Accel.Y_Acc); 
+  Serial.print("Desired:"); Serial.print(Accel.X_Acc); Serial.print(", "); Serial.println(Accel.Y_Acc); 
   calculator.Desire_X = Accel.X_Acc;
   calculator.Desire_Y = Accel.Y_Acc;
   calculator.Desire_Z = Accel.Z_Acc;  
@@ -35,11 +35,19 @@ void loop()
 {
   temp = remote.getMove(); //gets commands from the RF reciever
 
-  if(*(temp + 3) == 1) //if the value of the fourth byte sent is 255, then hovering mode
+  if(*(temp + 3) == 1 && !is_hover) //if the value of the fourth byte sent is 255, then hovering mode
   {
     is_hover = true;
+    AccMeter.Accel_State(&Accel);
+    calculator.Desire_X = Accel.X_Acc;
+    calculator.Desire_Y = Accel.Y_Acc;
+    calculator.Desire_Z = Accel.Z_Acc;
+    calculator.X_Angle = 90;
+    calculator.Y_Angle = 90;
+   //comment out above for debugging
+//    Serial.println("Changed to hover");  
   }
-  else if(*(temp + 3) == -1) //if the value of the fourth byte is 1, then control mode
+  else if(*(temp + 3) == -1 && is_hover) //if the value of the fourth byte is 1, then control mode
   {
     is_hover = false;
   }
