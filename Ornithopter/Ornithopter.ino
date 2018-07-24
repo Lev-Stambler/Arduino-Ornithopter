@@ -1,13 +1,14 @@
 #include "Accelerometer.h"
 #include "Acceleration.h"
 #include "Calculate.h"
-#include "Receiver.h"
+//#include "Receiver.h"
+#include "Remote.h"
 #include "Movement.h"
 #include "Plotter.h"
 
 const int RFPin = 2;
-bool is_hover= true;
-uint8_t* temp;
+bool is_hover;//= true;
+int* temp;
 /*
 * is hover is used to determine whether the arduino is in hover or control mode
 */
@@ -16,7 +17,8 @@ void setup()
 {
   Serial.begin(57600);
 //  Serial.println("STARTED");
-  recevr.SETUP();
+  //recevr.SETUP();
+  remote.SETUP();
   AccMeter.SETUP();
   AccMeter.Accel_State(&Accel);
 //  Serial.print("Desired:"); Serial.print(Accel.X_Acc); Serial.print(", "); Serial.println(Accel.Y_Acc); 
@@ -31,13 +33,13 @@ void setup()
 
 void loop() 
 {
-  temp = recevr.getMovementCommands(); //gets commands from the RF reciever
+  temp = remote.getMove(); //gets commands from the RF reciever
 
-  if(*(temp + 3) == 255) //if the value of the fourth byte sent is 255, then hovering mode
+  if(*(temp + 3) == 1) //if the value of the fourth byte sent is 255, then hovering mode
   {
     is_hover = true;
   }
-  else if(*(temp + 3) == 1) //if the value of the fourth byte is 1, then control mode
+  else if(*(temp + 3) == -1) //if the value of the fourth byte is 1, then control mode
   {
     is_hover = false;
   }
@@ -56,6 +58,5 @@ void loop()
     delay(10);
   }
 }
-
 
 
