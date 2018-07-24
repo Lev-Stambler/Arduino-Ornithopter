@@ -1,3 +1,4 @@
+/*
 #include "Arduino.h"
 #include "Receiver.h"
 //#include "Movement.h"
@@ -15,25 +16,25 @@ RH_ASK receiver;
 * This class Interfaces with the RF Reciever module
 */
 
-Receiver::Receiver(){
+//Receiver::Receiver(){
   
-}
+//}
 
 /*
 * This function sets up the RF
 */
-
+/*
 void Receiver::SETUP()
 {
   if (!receiver.init())
          Serial.println("init failed");
 }
-
+*/
 /*
 * This function gets the commands from the RF module and returns the int pointer where 
 * the array storring the commands can be found
 */
-
+/*
 uint8_t* Receiver:: getMovementCommands()
 {
   uint8_t *mem;
@@ -60,5 +61,5 @@ uint8_t* Receiver:: getMovementCommands()
 Receiver recevr = Receiver();
 
 
-
+*/
 
