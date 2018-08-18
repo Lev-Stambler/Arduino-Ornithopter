@@ -1,0 +1,30 @@
+#include <nRF24L01.h>
+#include <RF24.h>
+#include <SPI.h>
+
+const uint64_t pipe = 0xE8E1F0F0E1LL;
+RF24 radio (9,10);
+int  acc_data[3];
+
+void setup() {
+radio.begin();
+radio.openWritingPipe(pipe);
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+while (Serial.available()){
+int temp = 0;
+delay(3);
+while (Serial.available() > 0 && temp <3){  
+acc_data[0] = Serial.read();
+acc_data[1] = Serial.read();
+acc_data[2] = Serial.read();
+temp++;
+}
+}
+radio.write(acc_data,sizeof(acc_data));
+
+
+}
